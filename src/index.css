@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink font-body;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #ff2d75;
+  color: #f6e9ef;
+}
+
+/* paper grain texture, applied as an overlay */
+.paper-grain {
+  position: relative;
+}
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.font-hand {
+  font-family: "Caveat", cursive;
+}
+
+/* Polaroid frame */
+.polaroid {
+  @apply bg-off-white p-3 pb-10 shadow-paper rounded-sm;
+}
+
+/* washi tape strip */
+.tape {
+  position: absolute;
+  width: 70px;
+  height: 24px;
+  background: rgba(227, 183, 187, 0.55);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0.85;
+}
+.tape::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.25) 0px,
+    rgba(255, 255, 255, 0.25) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+/* torn paper edge — a fixed-height jagged tear pinned to the top, with the
+   rest of the element left fully visible no matter how tall the content
+   gets (a 100%-stretched single-layer mask used to scale the tear with
+   height, which hid/clipped content on taller cards like long notes). */
+.torn-edge {
+  --torn-h: 18px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='20' viewBox='0 0 400 20' preserveAspectRatio='none'%3E%3Cpath d='M0 8 L10 2 L22 10 L34 3 L47 9 L60 1 L74 8 L88 4 L101 10 L115 2 L129 9 L142 3 L156 8 L170 1 L184 9 L198 4 L212 10 L226 2 L240 8 L254 3 L268 9 L282 1 L296 8 L310 4 L324 10 L338 2 L352 9 L366 3 L380 8 L394 1 L400 6 L400 20 L0 20 Z' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(#000, #000);
+  -webkit-mask-size: 100% var(--torn-h), 100% calc(100% - var(--torn-h));
+  -webkit-mask-position: top, bottom;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='20' viewBox='0 0 400 20' preserveAspectRatio='none'%3E%3Cpath d='M0 8 L10 2 L22 10 L34 3 L47 9 L60 1 L74 8 L88 4 L101 10 L115 2 L129 9 L142 3 L156 8 L170 1 L184 9 L198 4 L212 10 L226 2 L240 8 L254 3 L268 9 L282 1 L296 8 L310 4 L324 10 L338 2 L352 9 L366 3 L380 8 L394 1 L400 6 L400 20 L0 20 Z' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(#000, #000);
+  mask-size: 100% var(--torn-h), 100% calc(100% - var(--torn-h));
+  mask-position: top, bottom;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* coupon perforation */
+.perforated {
+  background-image: radial-gradient(circle, transparent 3px, #0d0a0d 3.5px);
+  background-size: 14px 14px;
+  background-repeat: repeat-y;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
